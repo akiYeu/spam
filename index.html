@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPAM NÂNG CAO - BY Aki</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .banner {
+            background: linear-gradient(135deg, #1a0000, #330000);
+            border: 2px solid #ff0000;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .banner h1 {
+            color: #ff4444;
+            font-size: 24px;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        .banner p {
+            color: #00ffff;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .panel {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .panel h2 {
+            color: #ffff00;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+        .log {
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 4px;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .log-entry {
+            margin-bottom: 4px;
+            padding: 2px 5px;
+            border-radius: 2px;
+        }
+        .log-info { color: #00ffff; }
+        .log-success { color: #00ff00; }
+        .log-error { color: #ff0000; }
+        .log-warn { color: #ffff00; }
+        .log-time { color: #666; }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 5px rgba(255,0,0,0.5);
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.2s;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        button:hover {
+            background: #cc0000;
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+        }
+        button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        button.green { background: #00aa00; }
+        button.green:hover { background: #008800; box-shadow: 0 0 10px rgba(0,255,0,0.5); }
+        button.blue { background: #0066cc; }
+        button.blue:hover { background: #0055aa; box-shadow: 0 0 10px rgba(0,100,255,0.5); }
+        button.yellow { background: #cc9900; }
+        button.yellow:hover { background: #aa7700; box-shadow: 0 0 10px rgba(255,200,0,0.5); }
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .row > * {
+            flex: 1;
+            min-width: 150px;
+        }
+        label {
+            display: block;
+            color: #aaa;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status.running { background: #00aa00; color: #000; }
+        .status.stopped { background: #666; color: #fff; }
+        .status.error { background: #ff0000; color: #fff; }
+        .key-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .key-section input {
+            max-width: 300px;
+            text-align: center;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+        .key-section button {
+            padding: 12px 40px;
+            font-size: 14px;
+        }
+        .hidden { display: none; }
+        .tab-buttons {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .tab-buttons button {
+            margin: 0;
+            padding: 8px 16px;
+            font-size: 12px;
+            background: #222;
+        }
+        .tab-buttons button.active {
+            background: #ff0000;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .counter {
+            color: #00ff00;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- BANNER -->
+        <div class="banner">
+            <h1>🚀 SPAM NÂNG CAO - BY NANHH</h1>
+            <p>Discord Spam Tool | HTML Edition</p>
+        </div>
+
+        <!-- KEY CHECK -->
+        <div id="keySection" class="panel key-section">
+            <h2>🔑 NHẬP KEY ĐỂ TRUY CẬP</h2>
+            <p style="color:#666; font-size:12px; margin-bottom:15px;">Gợi ý: key mặc định là 'nanhhdz'</p>
+            <input type="password" id="keyInput" placeholder="Nhập key..." autocomplete="off">
+            <br>
+            <button onclick="checkKey()">XÁC NHẬN</button>
+            <p id="keyMsg" style="margin-top:10px; font-size:12px;"></p>
+        </div>
+
+        <!-- MAIN APP -->
+        <div id="mainApp" class="hidden">
+            <!-- CONFIG -->
+            <div class="panel">
+                <h2>🔧 CẤU HÌNH</h2>
+                <div class="row">
+                    <div>
+                        <label>Token</label>
+                        <input type="password" id="cfgToken" placeholder="Discord token...">
+                    </div>
+                    <div>
+                        <label>Webhook URL</label>
+                        <input type="text" id="cfgWebhook" placeholder="https://discord.com/api/webhooks/...">
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <label>Channel ID</label>
+                        <input type="text" id="cfgChannel" placeholder="123456789">
+                    </div>
+                    <div>
+                        <label>Delay (ms)</label>
+                        <input type="number" id="cfgDelay" value="500" min="100" step="100">
+                    </div>
+                </div>
+                <button class="green" onclick="saveConfig()">💾 LƯU CẤU HÌNH</button>
+            </div>
+
+            <!-- TABS -->
+            <div class="panel">
+                <div class="tab-buttons">
+                    <button class="active" onclick="switchTab('tabSpam')">💬 Spam Tin Nhắn</button>
+                    <button onclick="switchTab('tabNhay')">👻 Nhây Tag</button>
+                    <button onclick="switchTab('tabRaid')">💀 RAID Server</button>
+                </div>
+
+                <!-- TAB SPAM -->
+                <div id="tabSpam" class="tab-content active">
+                    <h2>💬 SPAM TIN NHẮN</h2>
+                    <label>Nội dung (mỗi dòng 1 tin)</label>
+                    <textarea id="spamContent" placeholder="Dòng 1&#10;Dòng 2&#10;Dòng 3"></textarea>
+                    <label>ID cần tag (bỏ trống nếu không tag)</label>
+                    <input type="text" id="spamMention" placeholder="123456789">
+                    <div class="row">
+                        <button class="green" onclick="startSpam()" id="btnSpam">▶ BẮT ĐẦU SPAM</button>
+                        <button onclick="stopSpam()" id="btnStopSpam" disabled>⏹ DỪNG</button>
+                    </div>
+                    <span id="spamStatus" class="status stopped">DỪNG</span>
+                    <span id="spamCount" class="counter"></span>
+                </div>
+
+                <!-- TAB NHAY -->
+                <div id="tabNhay" class="tab-content">
+                    <h2>👻 NHÂY TAG USER</h2>
+                    <label>Nội dung nhây (mỗi dòng 1 từ)</label>
+                    <textarea id="nhayContent" placeholder="Từ 1&#10;Từ 2&#10;Từ 3"></textarea>
+                    <label>ID user cần tag</label>
+                    <input type="text" id="nhayTag" placeholder="123456789">
+                    <div class="row">
+                        <button class="green" onclick="startNhay()" id="btnNhay">▶ BẮT ĐẦU NHÂY</button>
+                        <button onclick="stopNhay()" id="btnStopNhay" disabled>⏹ DỪNG</button>
+                    </div>
+                    <span id="nhayStatus" class="status stopped">DỪNG</span>
+                    <span id="nhayCount" class="counter"></span>
+                </div>
+
+                <!-- TAB RAID -->
+                <div id="tabRaid" class="tab-content">
+                    <h2>💀 RAID SERVER</h2>
+                    <label>Nội dung raid (mỗi dòng 1 tin)</label>
+                    <textarea id="raidContent" placeholder="# NANHH RAID SERVER&#10;LINK SV HẾT HẠN&#10;Server chết rồi!&#10;Ai vào không?"></textarea>
+                    <label>ID target (bỏ trống nếu không tag)</label>
+                    <input type="text" id="raidTarget" placeholder="123456789">
+                    <div class="row">
+                        <button class="green" onclick="startRaid()" id="btnRaid">▶ BẮT ĐẦU RAID</button>
+                        <button onclick="stopRaid()" id="btnStopRaid" disabled>⏹ DỪNG</button>
+                    </div>
+                    <span id="raidStatus" class="status stopped">DỪNG</span>
+                    <span id="raidCount" class="counter"></span>
+                </div>
+            </div>
+
+            <!-- LOG -->
+            <div class="panel">
+                <h2>📋 NHẬT KÝ HOẠT ĐỘNG</h2>
+                <div class="log" id="logBox"></div>
+                <button onclick="clearLog()">🗑 XÓA LOG</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================
+        // CẤU HÌNH
+        // =====================================================
+        const CORRECT_KEY = "nanhhdz";
+        let cfg = {
+            token: "",
+            webhook: "",
+            channelId: "",
+            delay: 500
+        };
+
+        // =====================================================
+        // TRẠNG THÁI SPAM
+        // =====================================================
+        let spamRunning = false;
+        let nhayRunning = false;
+        let raidRunning = false;
+        let spamTimer = null;
+        let nhayTimer = null;
+        let raidTimer = null;
+        let spamIdx = 0;
+        let nhayIdx = 0;
+        let raidIdx = 0;
+        let spamCountVal = 0;
+        let nhayCountVal = 0;
+        let raidCountVal = 0;
+
+        // =====================================================
+        // LOGGER
+        // =====================================================
+        function log(msg, level = "info") {
+            const box = document.getElementById("logBox");
+            const now = new Date();
+            const ts = now.toTimeString().split(" ")[0];
+            const div = document.createElement("div");
+            div.className = "log-entry log-" + level;
+            div.innerHTML = `<span class="log-time">[${ts}]</span> ${escapeHtml(msg)}`;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+            // Giới hạn 500 dòng log
+            while (box.children.length > 500) {
+                box.removeChild(box.firstChild);
+            }
+        }
+
+        function escapeHtml(text) {
+            const d = document.createElement("div");
+            d.textContent = text;
+            return d.innerHTML;
+        }
+
+        function clearLog() {
+            document.getElementById("logBox").innerHTML = "";
+        }
+
+        // =====================================================
+        // KIỂM TRA KEY
+        // =====================================================
+        function checkKey() {
+            const input = document.getElementById("keyInput").value.trim().toLowerCase();
+            const msg = document.getElementById("keyMsg");
+            if (input === CORRECT_KEY) {
+                msg.style.color = "#00ff00";
+                msg.textContent = "Đăng nhập thành công!";
+                setTimeout(() => {
+                    document.getElementById("keySection").classList.add("hidden");
+                    document.getElementById("mainApp").classList.remove("hidden");
+                    log("Đăng nhập thành công!", "success");
+                }, 500);
+            } else {
+                msg.style.color = "#ff0000";
+                msg.textContent = "Key sai! Thử lại.";
+                log("Key sai!", "error");
+            }
+        }
+
+        // =====================================================
+        // LƯU CẤU HÌNH
+        // =====================================================
+        function saveConfig() {
+            cfg.token = document.getElementById("cfgToken").value.trim();
+            cfg.webhook = document.getElementById("cfgWebhook").value.trim();
+            cfg.channelId = document.getElementById("cfgChannel").value.trim();
+            cfg.delay = parseInt(document.getElementById("cfgDelay").value) || 500;
+            log("Đã lưu cấu hình.", "success");
+        }
+
+        // =====================================================
+        // CHUYỂN TAB
+        // =====================================================
+        function switchTab(tabId) {
+            document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+            document.querySelectorAll(".tab-buttons button").forEach(b => b.classList.remove("active"));
+            document.getElementById(tabId).classList.add("active");
+            event.target.classList.add("active");
+        }
+
+        // =====================================================
+        // GỬI TIN NHẮN DISCORD
+        // =====================================================
+        async function sendDiscord(content, mentionId = null) {
+            const final = mentionId ? `<@${mentionId}> ${content}` : content;
+
+            let url, headers, body;
+
+            if (cfg.webhook && cfg.webhook.includes("discord.com/api/webhooks/")) {
+                url = cfg.webhook;
+                headers = { "Content-Type": "application/json" };
+                body = { content: final };
+            } else if (cfg.token && cfg.channelId) {
+                url = `https://discord.com/api/v10/channels/${cfg.channelId}/messages`;
+                headers = {
+                    "Authorization": cfg.token,
+                    "Content-Type": "application/json"
+                };
+                body = { content: final };
+            } else {
+                throw new Error("Thiếu token/webhook/channel ID");
+            }
+
+            const resp = await fetch(url, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(body)
+            });
+
+            if (resp.status !== 200 && resp.status !== 204) {
+                const text = await resp.text();
+                throw new Error(`HTTP ${resp.status}: ${text.substring(0, 120)}`);
+            }
+            return resp;
+        }
+
+        // =====================================================
+        // SPAM TIN NHẮN
+        // =====================================================
+        function startSpam() {
+            if (spamRunning) return;
+            const content = document.getElementById("spamContent").value.trim();
+            if (!content) {
+                log("Chưa có nội dung spam.", "warn");
+                return;
+            }
+            const lines = content.split("\n").map(l => l.trim()).filter(l => l);
+            if (lines.length === 0) {
+                log("Chưa có nội dung hợp lệ.", "warn");
+                return;
+            }
+            const mention = document.getElementById("spamMention").value.trim() || null;
+
+            if (!cfg.token && !cfg.webhook) {
+                log("Chưa cấu hình Token/Webhook.", "error");
+                return;
+            }
+
+            spamRunning = true;
+            spamIdx = 0;
+            spamCountVal = 0;
+            document.getElementById("btnSpam").disabled = true;
+            document.getElementById("btnStopSpam").disabled = false;
+            document.getElementById("spamStatus").className = "status running";
+            document.getElementById("spamStatus").textContent = "ĐANG CHẠY";
+            log(`▶ Bắt đầu spam (${lines.length} mẫu, delay ${cfg.delay}ms)`, "success");
+
+            const run = async () => {
+                if (!spamRunning) return;
+                const msg = lines[spamIdx % lines.length];
+                try {
+                    await sendDiscord(msg, mention);
+                    spamCountVal++;
+                    document.getElementById("spamCount").textContent = `Đã gửi: ${spamCountVal}`;
+                    log(`✅ Gửi: ${msg.substring(0, 40)}${msg.length > 40 ? "..." : ""}`, "success");
+                    spamIdx++;
+                } catch (e) {
+                    log(`❌ Lỗi: ${e.message}`, "error");
+                    stopSpam();
+                    return;
+                }
+                if (spamRunning) {
+                    spamTimer = setTimeout(run, cfg.delay);
+                }
+            };
+            run();
+        }
+
+        function stopSpam() {
+            spamRunning = false;
+            if (spamTimer) clearTimeout(spamTimer);
+            spamTimer = null;
+            document.getElementById("btnSpam").disabled = false;
+            document.getElementById("btnStopSpam").disabled = true;
+            document.getElementById("spamStatus").className = "status stopped";
+            document.getElementById("spamStatus").textContent = "DỪNG";
+            log("⏹ Đã dừng spam.", "warn");
+        }
+
+        // =====================================================
+        // NHÂY TAG
+        // =====================================================
+        function startNhay() {
+            if (nhayRunning) return;
+            const content = document.getElementById("nhayContent").value.trim();
+            if (!content) {
+                log("Chưa có nội dung nhây.", "warn");
+                return;
+            }
+            const words = content.split("\n").map(l => l.trim()).filter(l => l);
+            if (words.length === 0) {
+                log("Chưa có nội dung hợp lệ.", "warn");
+                return;
+            }
+            const tag = document.getElementById("nhayTag").value.trim();
+            if (!tag) {
+                log("Thiếu ID tag.", "error");
+                return;
+            }
+            if (!cfg.token && !cfg.webhook) {
+                log("Chưa cấu hình Token/Webhook.", "error");
+                return;
+            }
+
+            nhayRunning = true;
+            nhayIdx = 0;
+            nhayCountVal = 0;
+            document.getElementById("btnNhay").disabled = true;
+            document.getElementById("btnStopNhay").disabled = false;
+            document.getElementById("nhayStatus").className = "status running";
+            document.getElementById("nhayStatus").textContent = "ĐANG CHẠY";
+   
